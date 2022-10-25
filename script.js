@@ -17,31 +17,28 @@ window.onload = () => {
 };
 
 function getWeatherData() {
-  async function fetchData() {
-    const response = await API.getInfo();
-		if (response.ok) {
-			const data = await response.json();
-			const { name, main, weather } = data;
-			return { name, main, weather };
-		} else {
-			return Promise.reject(`${response.status}: ${response.statusText}`);
-		}
-  }
+  (async function fetchData() {
+    try {
+      const response = await API.getInfo();
+      if (response.ok) {
+        const data = await response.json();
+        const city = data.name;
+        const tempK = data.main.temp;
+        const pressure = data.main.pressure;
+        const forecast = data.weather[0].main;
 
-  fetchData()
-		.then((data) => {
-			const city = data.name;
-			const tempK = data.main.temp;
-			const pressure = data.main.pressure;
-			const forecast = data.weather[0].main;
+        const tempC = Math.round((tempK - 273) * 10) / 10;
+        const tempF = Math.round(((tempC * 9) / 5 + 32) * 10) / 10;
 
-			const tempC = Math.round((tempK - 273) * 10) / 10;
-			const tempF = Math.round(((tempC * 9) / 5 + 32) * 10) / 10;
-
-			const weatherData = { city, tempC, tempF, pressure, forecast };
-			showData(weatherData);
-		})
-		.catch((err) => alert(err));
+        const weatherData = { city, tempC, tempF, pressure, forecast };
+        showData(weatherData);
+      } else {
+        alert(`${response.status}: ${response.statusText}`);
+      }
+    } catch (err) {
+      alert(err);
+    }
+  })();
 }
 
 function showData(weatherData) {
@@ -87,6 +84,7 @@ function changeTempUnit() {
 function openSearchBar({ target }) {
   const searchBar = document.createElement("input");
   searchBar.classList.add("header-search");
+	searchBar.setAttribute("placeholder", "city name...");
   const headerMenu = document.querySelector(".header-menu");
   headerMenu.insertBefore(searchBar, headerMenu.firstChild);
   setTimeout(() => searchBar.classList.add("show"), 30);

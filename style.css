@@ -7,6 +7,8 @@
 	font-family: 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 	font-size: 2rem;
 	font-weight: bold;
+	background: url(./img/bg-image.jpg);
+	background-size: cover;
 }
 
 body {
@@ -16,12 +18,13 @@ body {
 }
 
 header {
-  background: lightblue;
+  background-color: rgba(3, 114, 149, 0.4);
   height: 3rem;
   padding: 2rem;
   display: flex;
   justify-content: space-between;
 	align-items: center;
+	cursor: default;
 }
 
 .header-menu {
@@ -107,7 +110,15 @@ main {
 .widget {
   height: 40%;
   width: 30%;
-  border: 1px solid black;
-  border-radius: 1rem;
   padding: 1rem;
+	background: rgba(3, 114, 149, 0.23);
+	border-radius: 16px;
+	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+	backdrop-filter: blur(6.1px);
+	border: 1px solid rgba(3, 114, 149, 0.08);
+	transition: all 1s ease-in-out;
+}
+
+.widget:hover {
+	transform: scale(1.05);
 }
